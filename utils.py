@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 from statsmodels.stats.outliers_influence import variance_inflation_factor
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 def calculate_vif(df, features):
     """
@@ -49,3 +51,21 @@ def generate_later_timestamp_column(df, reference_col, new_col='later_timestamp'
     df[new_col] = df[reference_col] + pd.to_timedelta(days_to_add, unit='D')
 
     return df
+
+def plot_outcome_by_physician_hra(data): 
+    data_piv = data.fillna("pass")
+    data_piv["outcome"] = data_piv.outcome.replace({"pass": 0, "failure": 1})
+    data_piv = data_piv.pivot_table(
+        index='servicing_provider_id',  # or name
+        columns='health_risk_assesment',
+        values='outcome',
+        aggfunc='mean'
+    )
+
+    plt.figure(figsize=(14, 8))
+    sns.heatmap(data_piv, cmap="coolwarm", annot=False, fmt=".2f", cbar_kws={'label': 'Failure Rate'})
+    plt.title("Failure Rate by Provider and Health Risk Score")
+    plt.xlabel("Health Risk Assessment")
+    plt.ylabel("Provider")
+    plt.tight_layout()
+    plt.show()
