@@ -26,6 +26,7 @@ The notebook performs:
 
 
 ## Repo Structure 
+```bash
 repo/
 ├── data/
 │   └── Product_Data.csv          # Patient and treatment data
@@ -33,8 +34,11 @@ repo/
 ├── hierarchical_bayes.py         # Hierarchical Bayesian model implementation
 ├── survival_analysis.py          # (Optional) Cox proportional hazards model
 ├── utils.py                      # Utility functions (VIF, plotting, etc.)
-├── physician_evaluation.ipynb    # Main notebook for analysis and visualization
+├── analysis_recommendation.ipynb    # Main notebook for analysis and visualization
+└── plots                         # plots
+│   └── plotly plots from analysis_recommendation.ipynb   
 └── README.md                     # This file
+```
 
 ## Methods 
 1. Hierarchical Bayesian Logistic Regression
