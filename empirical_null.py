@@ -26,12 +26,14 @@ def empirical_null_provider_failures(df, target_col, provider_col, covariates, n
 
     for provider, group in tqdm(df.groupby(provider_col), desc="Simulating nulls by provider"):
         n = len(group)
-        train_df = df[df[provider_col] != provider]
+        # removing 1 and 10 from empirical null calcualtion since these have only 1 gender each
+        train_df = df[(df[provider_col] != provider)]
         test_df = group.copy()
         
         X_train = train_df[covariates]
         y_train = train_df[target_col]
-        model = LogisticRegression(max_iter=1000)
+
+        model = LogisticRegression(penalty='l2', solver='liblinear', max_iter=1000)
         model.fit(X_train, y_train)
         # true failure rate per provider
         observed_fail_rate = group[target_col].mean()
@@ -61,3 +63,11 @@ def empirical_null_provider_failures(df, target_col, provider_col, covariates, n
 
     results_df = pd.DataFrame(provider_results)
     return results_df
+
+def bootstrap_stability_check(df, target_col, provider_col, covariates, n_bootstraps=10):
+    boostrap_results = []
+    for _ in range(n_bootstraps):
+        boot_df = df.sample(frac=1, replace=True)
+        res = empirical_null_provider_failures(boot_df, target_col, provider_col, covariates)
+        boostrap_results.append(res)
+    return(pd.concat(boostrap_results, ignore_index=True))
