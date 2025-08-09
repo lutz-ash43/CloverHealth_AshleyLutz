@@ -66,7 +66,7 @@ Computes:
 - p-values to flag significantly poor-performing physicians
 
 Bootstrap 
-- repeats this process 100 times to ensure stable results 
+- repeats this process 200 times to ensure stable results 
 
 ## Assumptions 
  - Missing outcome values (NaN) are considered successful outcomes
