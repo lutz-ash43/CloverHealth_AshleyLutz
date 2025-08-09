@@ -31,7 +31,8 @@ def empirical_null_provider_failures(df, target_col, provider_col, covariates, n
         
         X_train = train_df[covariates]
         y_train = train_df[target_col]
-        model = LogisticRegression(max_iter=1000)
+
+        model = LogisticRegression(penalty='l2', max_iter=1000)
         model.fit(X_train, y_train)
         # true failure rate per provider
         observed_fail_rate = group[target_col].mean()
