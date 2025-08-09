@@ -65,6 +65,20 @@ def empirical_null_provider_failures(df, target_col, provider_col, covariates, n
     return results_df
 
 def bootstrap_stability_check(df, target_col, provider_col, covariates, n_bootstraps=10):
+    """
+    Performs a bootstrap stability check by repeatedly resampling the input DataFrame and applying
+    the empirical_null_provider_failures function to each bootstrap sample.
+
+    Args:
+        df (pd.DataFrame): The input DataFrame containing the data.
+        target_col (str): The name of the target column in the DataFrame.
+        provider_col (str): The name of the provider column in the DataFrame.
+        covariates (list of str): List of covariate column names to be used in the analysis.
+        n_bootstraps (int, optional): Number of bootstrap samples to generate. Defaults to 10.
+
+    Returns:
+        pd.DataFrame: A concatenated DataFrame containing the results from each bootstrap iteration.
+    """
     boostrap_results = []
     for _ in range(n_bootstraps):
         boot_df = df.sample(frac=1, replace=True)
