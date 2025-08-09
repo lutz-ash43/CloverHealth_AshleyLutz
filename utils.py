@@ -54,6 +54,27 @@ def generate_later_timestamp_column(df, reference_col, new_col='later_timestamp'
     return df
 
 def plot_outcome_by_physician_hra(data): 
+    """
+    Plots a heatmap showing the failure rate of outcomes by servicing provider and health risk assessment.
+
+    This function processes the input DataFrame by replacing missing outcome values with "pass" and
+    mapping outcome values to binary (0 for "pass", 1 for "failure"). It then pivots the data to create
+    a table of mean failure rates for each provider and health risk assessment. The resulting heatmap
+    visualizes these failure rates, with providers on the y-axis and health risk assessments on the x-axis.
+
+    Parameters
+    ----------
+    data : pandas.DataFrame
+        A DataFrame containing at least the following columns:
+        - 'servicing_provider_id': Identifier for each provider.
+        - 'health_risk_assesment': Health risk assessment category or score.
+        - 'outcome': Outcome value, expected to be "pass", "failure", or NaN.
+
+    Returns
+    -------
+    None
+        Displays the heatmap plot.
+    """
     data_piv = data.fillna("pass")
     data_piv["outcome"] = data_piv.outcome.replace({"pass": 0, "failure": 1})
     data_piv = data_piv.pivot_table(
@@ -72,6 +93,23 @@ def plot_outcome_by_physician_hra(data):
     plt.show()
 
 def plot_failure_rates(data_outcome_compare, bad_providers): 
+    """
+    Plots the distribution of provider failure rates and highlights specified providers.
+    Parameters
+    ----------
+    data_outcome_compare : pd.DataFrame
+        DataFrame containing provider outcome data. Must include columns 'servicing_provider_id' and 'outcome'.
+        The 'outcome' column should contain values indicating success or failure.
+    bad_providers : list or iterable
+        List of provider IDs to highlight on the plot as significantly worse providers.
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame indexed by 'servicing_provider_id' with columns:
+            - 'failure_rate': The rate of failures for each provider.
+            - 'count': The total number of outcomes for each provider.
+        Sorted by provider ID.
+    """
     provider_counts = data_outcome_compare.groupby("servicing_provider_id")["outcome"].count()
     provider_failures = data_outcome_compare[data_outcome_compare["outcome"] == "failure"].groupby("servicing_provider_id")["outcome"].count()
     failure_rate = (provider_failures / provider_counts).fillna(0)
