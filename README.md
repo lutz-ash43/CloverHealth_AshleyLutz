@@ -36,7 +36,11 @@ repo/
 ├── utils.py                      # Utility functions (VIF, plotting, etc.)
 ├── analysis_recommendation.ipynb    # Main notebook for analysis and visualization
 └── plots                         # plots
-│   └── plotly plots from analysis_recommendation.ipynb   
+│   └── plotly plots from analysis_recommendation.ipynb
+└── iframe figures                         # plots
+│   └── default iframe location for plots
+└── archive                         # plots
+│   └── initial_workbook.ipynb # initial exploratory file 
 └── README.md                     # This file
 ```
 
