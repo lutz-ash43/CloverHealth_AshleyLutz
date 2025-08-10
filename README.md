@@ -35,12 +35,14 @@ repo/
 ├── survival_analysis.py          # (Optional) Cox proportional hazards model
 ├── utils.py                      # Utility functions (VIF, plotting, etc.)
 ├── analysis_recommendation.ipynb    # Main notebook for analysis and visualization
+├── analysis_recommendation.pdf   # pdf version of notebook
+├── Clover Health _ Physician Efficacy Evaluation and Recommendation.pdf # final deck explaining emthods and results 
 └── plots                         # plots
 │   └── plotly plots from analysis_recommendation.ipynb
-└── iframe figures                         # plots
+└── iframe figures                # plots
 │   └── default iframe location for plots
-└── archive                         # plots
-│   └── initial_workbook.ipynb # initial exploratory file 
+└── archive                       # plots
+│   └── initial_workbook.ipynb    # initial exploratory file 
 └── README.md                     # This file
 ```
 
